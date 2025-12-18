@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - BookHaven</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            background:linear-gradient(to right, #0d78d4, #2c5fd4);
+        }
+
+        .login-container{
+            background:#fff;
+            padding:40px;
+            border-radius:12px;
+            width:400px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.2);
+            text-align:center;
+        }
+
+        .login-container h1{
+            font-size:32px;
+            margin-bottom:10px;
+            color:#0d1b4b;
+        }
+
+        .login-container p{
+            margin-bottom:30px;
+            color:#555;
+        }
+
+        .tabs{
+            display:flex;
+            justify-content:space-between;
+            margin-bottom:20px;
+        }
+
+        .tabs div{
+            width:48%;
+            padding:10px 0;
+            cursor:pointer;
+            border-bottom:2px solid transparent;
+            font-weight:bold;
+            color:#555;
+        }
+
+        .tabs .active{
+            border-bottom:2px solid #0d1b4b;
+            color:#0d1b4b;
+        }
+
+        form{
+            display:flex;
+            flex-direction:column;
+            gap:15px;
+        }
+
+        input{
+            padding:12px;
+            border-radius:6px;
+            border:1px solid #ccc;
+            font-size:16px;
+        }
+
+        button{
+            padding:12px;
+            border:none;
+            border-radius:6px;
+            background:#0d1b4b;
+            color:#fff;
+            font-size:16px;
+            cursor:pointer;
+            margin-top:10px;
+        }
+
+        .guest{
+            margin-top:15px;
+            color:#0d1b4b;
+            text-decoration:underline;
+            cursor:pointer;
+            font-size:14px;
+        }
+
+        .hidden{
+            display:none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h1>📘 BookHaven</h1>
+        <p id="form-text">Welcome back, please login to your account</p>
+
+        <div class="tabs">
+            <div id="login-tab" class="active">Login</div>
+            <div id="signup-tab">Signup</div>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form">
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Password">
+            <button type="submit">Login</button>
+        </form>
+
+        <!-- Signup Form -->
+        <form id="signup-form" class="hidden">
+            <input type="text" placeholder="Full Name">
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Password">
+            <button type="submit">Signup</button>
+        </form>
+
+        <div class="guest" onclick="window.location.href='index.html'">Continue as Guest</div>
+    </div>
+
+    <script>
+        const loginTab = document.getElementById('login-tab');
+        const signupTab = document.getElementById('signup-tab');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const formText = document.getElementById('form-text');
+
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            signupTab.classList.remove('active');
+            loginForm.classList.remove('hidden');
+            signupForm.classList.add('hidden');
+            formText.textContent = 'Welcome back, please login to your account';
+        });
+
+        signupTab.addEventListener('click', () => {
+            signupTab.classList.add('active');
+            loginTab.classList.remove('active');
+            signupForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+            formText.textContent = 'Create a new account';
+        });
+    </script>
+
+</body>
+</html>

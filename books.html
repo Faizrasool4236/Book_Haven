@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books - BookHaven</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+        }
+
+        /* NAVBAR */
+        nav {
+            width: 100%;
+            background: #fff;
+            padding: 15px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .login-btn {
+            padding: 8px 18px;
+            background: #111;
+            color: #fff;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        /* BROWSE BOOKS SECTION */
+        .browse-section {
+            padding: 60px 50px;
+            background: #fff;
+        }
+
+        .browse-header {
+            margin-bottom: 30px;
+        }
+
+        .browse-header h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #0d1b4b;
+        }
+
+        .browse-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .search-container {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2c5fd4;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .category-btn {
+            padding: 8px 16px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn.active {
+            background: #2c5fd4;
+            color: white;
+        }
+
+        .category-btn:hover {
+            background: #ddd;
+        }
+
+        .category-btn.active:hover {
+            background: #1a4bb8;
+        }
+
+        .results-count {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        /* BOOKS GRID */
+        .books {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .book-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .book-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .book-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .book-author {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 8px;
+            color: #666;
+        }
+
+        .price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0d1b4b;
+        }
+
+        .add-btn {
+            margin-top: 12px;
+            padding: 10px;
+            width: 100%;
+            background: #0d1b4b;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .add-btn:hover {
+            background: #1a4bb8;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .books {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .books {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            nav {
+                padding: 15px 20px;
+            }
+            
+            .browse-section {
+                padding: 40px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .books {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">📘 BookHaven</div>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a style="color:#2c5fd4;" href="books.html">Books</a>
+        </div>
+
+        <div class="nav-right">
+            🛒
+            <a href="login.html" class="login-btn">Login</a>
+        </div>
+    </nav>
+
+    <!-- BROWSE BOOKS SECTION -->
+    <div class="browse-section">
+        <div class="browse-header">
+            <h2>Browse Books</h2>
+            <p>Discover your next favorite book from our collection</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search by title or author...">
+        </div>
+
+        <div class="categories">
+            <button class="category-btn active">All</button>
+            <button class="category-btn">Fiction</button>
+            <button class="category-btn">Self-Help</button>
+            <button class="category-btn">Mystery</button>
+            <button class="category-btn">History</button>
+            <button class="category-btn">Biography</button>
+            <button class="category-btn">Finance</button>
+            <button class="category-btn">Science Fiction</button>
+            <button class="category-btn">Historical Fiction</button>
+            <button class="category-btn">Psychology</button>
+        </div>
+
+        <div class="results-count">Showing 12 books</div>
+
+        <div class="books">
+            <!-- Book 1 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f" alt="Book cover">
+                <p class="book-title">The Psychology of Money</p>
+                <p class="book-author">Morgan Housel</p>
+                <div class="rating">⭐ 4.7</div>
+                <p class="price">$16.50</p>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+
+            <!-- Book 2 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1589998059171-788d7a431ad4" alt="Book cover">
+                <p class="book-title">Project Hail Mary</p>
+                <p class="book-author">Andy Weir</p>
+                <div class="rating">⭐ 4.8</div>
+                <p class="price">$19.99</p>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+
+            <!-- Book 3 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794" alt="Book cover">
+                <p class="book-title">Educated</p>
+                <p class="book-author">Tara Westover</p>
+                <div class="rating">⭐ 4.6</div>
+                <p class="price">$17.99</p>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+
+            <!-- Book 4 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba" alt="Book cover">
+                <p class="book-title">The Silent Patient</p>
+                <p class="book-author">Alex Michaelides</p>
+                <div class="rating">⭐ 4.3</div>
+                <p class="price">$15.99</p>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+
+            <!-- Book 5 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765" alt="Book cover">
+                <p class="book-title">Atomic Habits</p>
+                <p class="book-author">James Clear</p>
+                <div class="rating">⭐ 4.8</div>
+                <p class="price">$14.99</p>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+
+            <!-- Book 6 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1531346680769-a1d79b57de2e" alt="Book cover">
+                <p class="book-title">The Midnight Library</p>
+                <p class="book-author">Matt Haig</p>
+                <div class="rating">⭐ 4.5</div>
+                <p class="price">$16.99</p>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+
+            <!-- Book 7 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf" alt="Book cover">
+                <p class="book-title">Sapiens</p>
+                <p class="book-author">Yuval Noah Harari</p>
+                <div class="rating">⭐ 4.7</div>
+                <p class="price">$18.99</p>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+
+            <!-- Book 8 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73" alt="Book cover">
+                <p class="book-title">The Obstacle is the Way</p>
+                <p class="book-author">Ryan Holiday</p>
+                <div class="rating">⭐ 4.6</div>
+                <p class="price">$15.50</p>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+
+            <!-- Book 9 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1531901599638-a89bb60971a3" alt="Book cover">
+                <p class="book-title">Zero to One</p>
+                <p class="book-author">Peter Thiel</p>
+                <div class="rating">⭐ 4.5</div>
+                <p class="price">$20.99</p>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+
+            <!-- Book 10 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1530825894095-9c184b068fcb" alt="Book cover">
+                <p class="book-title">The Startup Standard</p>
+                <p class="book-author">Various Authors</p>
+                <div class="rating">⭐ 4.4</div>
+                <p class="price">$22.50</p>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+
+            <!-- Book 11 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353" alt="Book cover">
+                <p class="book-title">The Corporate Startup</p>
+                <p class="book-author">Tendayi Viki</p>
+                <div class="rating">⭐ 4.3</div>
+                <p class="price">$19.50</p>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+
+            <!-- Book 12 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1554757380-2fb69b9d5e95" alt="Book cover">
+                <p class="book-title">Noble Proposition Design</p>
+                <p class="book-author">Alan Klement</p>
+                <div class="rating">⭐ 4.2</div>
+                <p class="price">$17.99</p>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple category filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Alert for demo
+                    if (this.textContent !== 'All') {
+                        alert(`Filtering by ${this.textContent} category`);
+                    }
+                });
+            });
+            
+            // Simple search functionality
+            const searchInput = document.querySelector('.search-input');
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    alert(`Searching for: ${this.value}`);
+                }
+            });
+            
+            // Add to cart functionality
+            const addButtons = document.querySelectorAll('.add-btn');
+            addButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const bookTitle = this.parentElement.querySelector('.book-title').textContent;
+                    alert(`Added "${bookTitle}" to cart`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
